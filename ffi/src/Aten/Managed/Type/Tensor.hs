@@ -160,6 +160,11 @@ tensor_options
   -> IO (ForeignPtr TensorOptions)
 tensor_options = cast1 Unmanaged.tensor_options
 
+tensor_item_double_
+  :: ForeignPtr Tensor
+  -> IO (CDouble)
+tensor_item_double_ = cast1 Unmanaged.tensor_item_double_
+
 tensor_print
   :: ForeignPtr Tensor
   -> IO (())

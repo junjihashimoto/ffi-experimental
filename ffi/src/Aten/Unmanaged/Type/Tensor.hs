@@ -237,6 +237,14 @@ tensor_options _obj =
     ));
   }|]
 
+tensor_item_double_
+  :: Ptr Tensor
+  -> IO (CDouble)
+tensor_item_double_ _obj =
+  [C.block| double { return ((*$(at::Tensor* _obj)).item<double>(
+    ));
+  }|]
+
 tensor_print
   :: Ptr Tensor
   -> IO (())

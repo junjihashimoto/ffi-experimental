@@ -43,6 +43,7 @@ methods:
 - options() -> TensorOptions
 #- data() -> T*
 #- item() -> T
+- item<double>() -> double
 - print() -> void
 #- accessor() -> TensorAccessor<T,N>
 #- accessor() -> TensorAccessor<T,N>

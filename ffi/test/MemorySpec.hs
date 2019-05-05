@@ -1,14 +1,11 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE DataKinds #-}
-module Main where
---module MemorySpec where
+module MemorySpec (main, spec) where
 
 import Test.Hspec
 import Control.Exception (bracket)
 import Control.Monad (forM_,forM)
---import Numeric.Dimensions
---import Torch.Double.Dynamic as Dynamic
 import Data.Int
 import Foreign
 import Aten.Const
@@ -28,13 +25,9 @@ main = hspec spec
 
 spec :: Spec
 spec = do
-  it "scenario: memoryTestMinimal" memoryTestMinimal
+  describe "MemorySpec" $ do
+    it "scenario: memoryTestMinimal" memoryTestMinimal
 
---headIdx :: Dims '[0, 0, 0, 0]
---headIdx = dims
-
---headIdx' :: IntArray
---headIdx' = IntArray (dims :: Dims '[0, 0, 0, 0])
 
 fromList :: [Int64] -> IO (ForeignPtr IntArray)
 fromList dims = do

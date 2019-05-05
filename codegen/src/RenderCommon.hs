@@ -228,8 +228,32 @@ retToCppType parsable =
     P.CppClass _ cpptype _ -> fromString cpptype
 
 
---functionToCpp :: Bool -> String -> String -> Function -> Text
---functionToCpp = functionToCpp' False
+
+toHsFuncName :: Bool -> String -> String
+toHsFuncName is_constructor cpp_function_name = hsfuncname
+  where
+    hsfuncname' =
+      if is_constructor
+      then drop 3 $ toHsFuncName' cpp_function_name -- To drop the prefix string of 'new' 
+      else toHsFuncName' cpp_function_name
+    hsfuncname =
+      case hsfuncname' of
+        "=" -> "_assign_"
+        "+=" -> "_iadd_"
+        "-=" -> "_isub_"
+        "*=" -> "_imul_"
+        "/=" -> "_idiv_"
+        "[]" -> "_at_"
+        _ -> hsfuncname'
+    replace [] = []
+    replace ('<':xs') = '_':replace xs'
+    replace ('>':xs') = '_':replace xs'
+    replace (',':xs') = ',':replace xs'
+    replace (x':xs') = x':replace xs'
+    toHsFuncName' :: String -> String
+    toHsFuncName' [] = []
+    toHsFuncName' (x:xs) = toLower x : replace xs
+
 
 functionToCpp :: Bool -> Bool -> String -> String -> Function -> Text
 functionToCpp is_managed add_type_initials prefix suffix fn =
@@ -247,10 +271,7 @@ functionToCpp is_managed add_type_initials prefix suffix fn =
   }|#{cket}
 |]
   where
-    renameFunc :: String -> String
-    renameFunc [] = []
-    renameFunc (x:xs) = toLower x : xs
-    hsfuncname = renameFunc $ P.name fn
+    hsfuncname = toHsFuncName False (P.name fn)
     parameters' = filter isNotStar $ parameters fn
     num_args :: Int
     num_args = length parameters'
@@ -327,26 +348,12 @@ methodToCpp class' is_constructor is_managed add_type_initials prefix suffix fn 
     function_name =
       if is_constructor
       then [st|new#{(PC.hsname class')}#{(hsfuncname)}#{type_initials}|]
-      else [st|#{renameFunc (PC.hsname class')}_#{hsfuncname}#{type_initials}|]
+       else [st|#{toHsFuncName False (PC.hsname class')}_#{hsfuncname}#{type_initials}|]
     type_object :: Parameter
     type_object = Parameter (P.CppClass (PC.signature class')  (PC.cppname class')  (PC.hsname class') ) "obj" Nothing
     type_object_str :: Text
     type_object_str = [st|(*$(#{parsableToCppType (ptype type_object)}* _#{pname type_object}))|]
-    renameFunc :: String -> String
-    renameFunc [] = []
-    renameFunc (x:xs) = toLower x : xs
-    hsfuncname' =
-      if is_constructor
-      then drop 3 $ renameFunc $ P.name fn
-      else renameFunc $ P.name fn
-    hsfuncname =
-      case hsfuncname' of
-        "=" -> "_assign_"
-        "+=" -> "_iadd_"
-        "-=" -> "_isub_"
-        "*=" -> "_imul_"
-        "[]" -> "_at_"
-        _ -> hsfuncname'
+    hsfuncname = toHsFuncName is_constructor (P.name fn)
     op :: Text -> Text -> Text
     op fn' args' =
       case fn' of
@@ -354,6 +361,7 @@ methodToCpp class' is_constructor is_managed add_type_initials prefix suffix fn 
         "+=" -> "+=" <> args'
         "-=" -> "-=" <> args'
         "*=" -> "*=" <> args'
+        "/=" -> "/=" <> args'
         "[]" -> "[" <> args' <> "]"
         _ -> "." <> fn' <> args'
     op' = op (fromString (prefix <> P.name fn <> suffix)) [st|(
