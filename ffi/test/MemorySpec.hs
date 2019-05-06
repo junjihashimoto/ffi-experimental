@@ -59,7 +59,7 @@ iteratorAssign d niter = do
     putStr ("Iteration : " ++ show iter ++ " / ")
     x <- newTensor_zeros d
     v <- tensor_dim x
-    putStrLn $ "Printing dummy value: " ++ show v
+    putStr $ "Printing dummy value: " ++ show v ++ "\r"
   putStrLn "Done"
 
 -- |Releases memory on OSX (but not consistently on linux)
@@ -71,7 +71,7 @@ iteratorMonadic d niter = do
     putStr ("Iteration : " ++ show iter ++ " / ")
     x <- newTensor_zeros d
     v <- tensor_dim x
-    putStrLn $ "Printing dummy value: " ++ show v
+    putStr $ "Printing dummy value: " ++ show v ++ "\r"
   putStrLn "Done"
 
 -- |Releases memory
@@ -85,7 +85,7 @@ iteratorBracket d niter = do
        putStr ("Iteration : " ++ show iter ++ " / ")
        x <- newTensor_zeros d
        v <- tensor_dim x
-       putStrLn $ "Printing dummy value: " ++ show v
+       putStr $ "Printing dummy value: " ++ show v ++ "\r"
     )
     (const (pure ()))
   putStrLn "Done"

@@ -30,6 +30,7 @@ library
                     , Aten.Unmanaged.Type.TensorOptions
                     , Aten.Unmanaged.Type.StdString
                     , Aten.Unmanaged.Type.StdArray
+                    , Aten.Unmanaged.Type.Extra
                     , Aten.Managed.NN
                     , Aten.Managed.TH
                     , Aten.Managed.Native
@@ -44,6 +45,7 @@ library
                     , Aten.Managed.Type.TensorOptions
                     , Aten.Managed.Type.StdString
                     , Aten.Managed.Type.StdArray
+                    , Aten.Managed.Type.Extra
  hs-source-dirs: src
  default-language: Haskell2010
  build-depends:       base >= 4.7 && < 5
