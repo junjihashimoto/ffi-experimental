@@ -20,6 +20,7 @@ import qualified Language.C.Inline.Cpp.Exceptions as C
 import qualified Language.C.Inline.Context as C
 import qualified Language.C.Types as C
 import qualified Data.Map as Map
+import Control.Exception.Safe
 
 import Foreign.C.String
 import Foreign.C.Types
@@ -52,11 +53,12 @@ testInit = do
 
 testException :: IO ()
 testException = do
-    [C.throwBlock| void {
+    v <- try [C.throwBlock| void {
         std::cout << "Hello Exception!" << std::endl;
         torch::Tensor tensor = torch::rand({2, 3});
         std::cout << tensor[3.14] << std::endl;
     } |]
+    print (v :: Either SomeException ())
 
 testAutograd :: IO ()
 testAutograd = do
