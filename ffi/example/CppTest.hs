@@ -50,6 +50,14 @@ testInit = do
         std::cout << tensor << std::endl;
     } |]
 
+testException :: IO ()
+testException = do
+    [C.throwBlock| void {
+        std::cout << "Hello Exception!" << std::endl;
+        torch::Tensor tensor = torch::rand({2, 3});
+        std::cout << tensor[3.14] << std::endl;
+    } |]
+
 testAutograd :: IO ()
 testAutograd = do
     [C.block| void {
@@ -85,4 +93,5 @@ testResource = do
 main :: IO ()
 main = do
     testInit
+    testException
     testAutograd
