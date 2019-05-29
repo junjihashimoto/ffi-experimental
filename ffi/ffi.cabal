@@ -69,6 +69,7 @@ library
                     , mklml
                     , caffe2
                     , torch
+ extra-ghci-libraries: stdc++
  ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0
  cc-options:        -D_GLIBCXX_USE_CXX11_ABI=0
  cxx-options:       -D_GLIBCXX_USE_CXX11_ABI=0
