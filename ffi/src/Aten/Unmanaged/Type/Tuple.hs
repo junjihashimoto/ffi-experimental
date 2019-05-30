@@ -10,15 +10,15 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleInstances #-}
 
-module Aten.Unmanaged.Type.Tuple where
+module ATen.Unmanaged.Type.Tuple where
 
 
 import Foreign.C.String
 import Foreign.C.Types
 import Foreign hiding (newForeignPtr)
 import Foreign.Concurrent
-import Aten.Type
-import Aten.Class
+import ATen.Type
+import ATen.Class
 
 import qualified Language.C.Inline.Cpp as C
 import qualified Language.C.Inline.Cpp.Exceptions as C

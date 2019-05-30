@@ -11,7 +11,7 @@
 
 -----------------------------------------------------------------------------
 -- |
--- Module      : Aten.Cast from FFICXX.Runtime.Cast
+-- Module      : ATen.Cast from FFICXX.Runtime.Cast
 -- Copyright   : (c) 2011-2017 Ian-Woo Kim
 --
 -- License     : BSD3
@@ -21,7 +21,7 @@
 --
 -----------------------------------------------------------------------------
 
-module Aten.Cast where
+module ATen.Cast where
 
 import Control.Monad         ((>=>))
 import Data.ByteString.Char8 (ByteString,packCString, useAsCString)
@@ -34,7 +34,7 @@ import Foreign.ForeignPtr
 import Foreign.Marshal.Array
 import Foreign.Ptr
 import Foreign.Storable
-import Aten.Class
+import ATen.Class
 
 
 instance Castable () () where

@@ -7,7 +7,7 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 
-module Aten.Class where
+module ATen.Class where
 
 import Foreign (Ptr, ForeignPtr)
 

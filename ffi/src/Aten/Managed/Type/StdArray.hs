@@ -8,17 +8,17 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleInstances #-}
 
-module Aten.Managed.Type.StdArray where
+module ATen.Managed.Type.StdArray where
 
 
 import Foreign.C.String
 import Foreign.C.Types
 import Foreign hiding (newForeignPtr)
 import Foreign.Concurrent
-import Aten.Type
-import Aten.Class
-import Aten.Cast
-import qualified Aten.Unmanaged.Type.StdArray as Unmanaged
+import ATen.Type
+import ATen.Class
+import ATen.Cast
+import qualified ATen.Unmanaged.Type.StdArray as Unmanaged
 
 
 

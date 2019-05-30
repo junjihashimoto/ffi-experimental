@@ -8,27 +8,27 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Aten.Managed.Native where
+module ATen.Managed.Native where
 
 
 import Foreign.C.String
 import Foreign.C.Types
 import Foreign
-import Aten.Type
-import Aten.Class
-import Aten.Cast
-import qualified Aten.Unmanaged.Native as Unmanaged
-import Aten.Unmanaged.Type.Generator
-import Aten.Unmanaged.Type.IntArray
-import Aten.Unmanaged.Type.Scalar
-import Aten.Unmanaged.Type.SparseTensorRef
-import Aten.Unmanaged.Type.Storage
-import Aten.Unmanaged.Type.Tensor
-import Aten.Unmanaged.Type.TensorList
-import Aten.Unmanaged.Type.TensorOptions
-import Aten.Unmanaged.Type.Tuple
-import Aten.Unmanaged.Type.StdString
-import Aten.Unmanaged.Type.StdArray
+import ATen.Type
+import ATen.Class
+import ATen.Cast
+import qualified ATen.Unmanaged.Native as Unmanaged
+import ATen.Unmanaged.Type.Generator
+import ATen.Unmanaged.Type.IntArray
+import ATen.Unmanaged.Type.Scalar
+import ATen.Unmanaged.Type.SparseTensorRef
+import ATen.Unmanaged.Type.Storage
+import ATen.Unmanaged.Type.Tensor
+import ATen.Unmanaged.Type.TensorList
+import ATen.Unmanaged.Type.TensorOptions
+import ATen.Unmanaged.Type.Tuple
+import ATen.Unmanaged.Type.StdString
+import ATen.Unmanaged.Type.StdArray
 
 
 _cast_Byte_tb

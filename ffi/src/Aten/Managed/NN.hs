@@ -8,27 +8,27 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Aten.Managed.NN where
+module ATen.Managed.NN where
 
 
 import Foreign.C.String
 import Foreign.C.Types
 import Foreign
-import Aten.Type
-import Aten.Class
-import Aten.Cast
-import qualified Aten.Unmanaged.NN as Unmanaged
-import Aten.Unmanaged.Type.Generator
-import Aten.Unmanaged.Type.IntArray
-import Aten.Unmanaged.Type.Scalar
-import Aten.Unmanaged.Type.SparseTensorRef
-import Aten.Unmanaged.Type.Storage
-import Aten.Unmanaged.Type.Tensor
-import Aten.Unmanaged.Type.TensorList
-import Aten.Unmanaged.Type.TensorOptions
-import Aten.Unmanaged.Type.Tuple
-import Aten.Unmanaged.Type.StdString
-import Aten.Unmanaged.Type.StdArray
+import ATen.Type
+import ATen.Class
+import ATen.Cast
+import qualified ATen.Unmanaged.NN as Unmanaged
+import ATen.Unmanaged.Type.Generator
+import ATen.Unmanaged.Type.IntArray
+import ATen.Unmanaged.Type.Scalar
+import ATen.Unmanaged.Type.SparseTensorRef
+import ATen.Unmanaged.Type.Storage
+import ATen.Unmanaged.Type.Tensor
+import ATen.Unmanaged.Type.TensorList
+import ATen.Unmanaged.Type.TensorOptions
+import ATen.Unmanaged.Type.Tuple
+import ATen.Unmanaged.Type.StdString
+import ATen.Unmanaged.Type.StdArray
 
 
 _thnn_binary_cross_entropy_forward_out

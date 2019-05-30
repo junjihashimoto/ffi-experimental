@@ -8,27 +8,27 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleInstances #-}
 
-module Aten.Managed.Type.Storage where
+module ATen.Managed.Type.Storage where
 
 
 import Foreign.C.String
 import Foreign.C.Types
 import Foreign hiding (newForeignPtr)
 import Foreign.Concurrent
-import Aten.Type
-import Aten.Class
-import Aten.Cast
-import Aten.Unmanaged.Type.Generator
-import Aten.Unmanaged.Type.IntArray
-import Aten.Unmanaged.Type.Scalar
-import Aten.Unmanaged.Type.SparseTensorRef
-import Aten.Unmanaged.Type.Storage
-import Aten.Unmanaged.Type.Tensor
-import Aten.Unmanaged.Type.TensorList
-import Aten.Unmanaged.Type.TensorOptions
-import Aten.Unmanaged.Type.Tuple
+import ATen.Type
+import ATen.Class
+import ATen.Cast
+import ATen.Unmanaged.Type.Generator
+import ATen.Unmanaged.Type.IntArray
+import ATen.Unmanaged.Type.Scalar
+import ATen.Unmanaged.Type.SparseTensorRef
+import ATen.Unmanaged.Type.Storage
+import ATen.Unmanaged.Type.Tensor
+import ATen.Unmanaged.Type.TensorList
+import ATen.Unmanaged.Type.TensorOptions
+import ATen.Unmanaged.Type.Tuple
 
-import qualified Aten.Unmanaged.Type.Storage as Unmanaged
+import qualified ATen.Unmanaged.Type.Storage as Unmanaged
 
 
 
