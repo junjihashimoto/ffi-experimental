@@ -188,6 +188,10 @@ instance Castable Word64 Word64 where
   cast x f = f x
   uncast x f = f x
 
+instance Castable Bool CBool where
+  cast x f = f (if x then 1 else 0)
+  uncast x f = f (x /= 0)
+
 instance Castable Int CInt where
   cast x f = f (fromIntegral x)
   uncast x f = f (fromIntegral x)

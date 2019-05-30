@@ -15,8 +15,10 @@ library
  exposed-modules:     Torch
                       Torch.Tensor
                     , Torch.TensorOptions
+                    , Torch.DType
                     , Torch.TensorFactories
                     , Torch.Functions
+                    , Torch.Autograd
  hs-source-dirs:      src
  default-language:    Haskell2010
  build-depends:       base >= 4.7 && < 5

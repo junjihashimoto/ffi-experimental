@@ -10,6 +10,7 @@ import qualified Aten.Const as ATen
 import qualified Aten.Managed.Native as ATen
 import qualified Aten.Managed.Type.TensorOptions as ATen
 import qualified Aten.Type as ATen
+import qualified Torch.Managed.Native as LibTorch
 import Aten.Managed.Cast
 import Aten.Class (Castable(..))
 import Aten.Cast
@@ -17,8 +18,8 @@ import Aten.Cast
 import Torch.Tensor
 import Torch.TensorOptions
 
-defaultTensorOptions :: TensorOptions
-defaultTensorOptions = TensorOptions $ unsafePerformIO $ ATen.newTensorOptions_s ATen.kFloat
+-- XXX: We use the torch:: constructors, not at:: constructures, because
+--      otherwise we cannot use libtorch's AD.
 
 type FactoryType = ForeignPtr ATen.IntArray
                     -> ForeignPtr ATen.TensorOptions
@@ -31,21 +32,21 @@ mkFactoryUnsafe :: FactoryType -> [Int] -> TensorOptions -> Tensor
 mkFactoryUnsafe f shape opts = unsafePerformIO $ mkFactory f shape opts
 
 mkDefaultFactory :: ([Int] -> TensorOptions -> a) -> [Int] -> a
-mkDefaultFactory non_default shape = non_default shape defaultTensorOptions
+mkDefaultFactory non_default shape = non_default shape defaultOpts
 
 -------------------- Factories --------------------
 
 ones :: [Int] -> TensorOptions -> Tensor
-ones = mkFactoryUnsafe ATen.ones_lo
+ones = mkFactoryUnsafe LibTorch.ones_lo
 
 zeros :: [Int] -> TensorOptions -> Tensor
-zeros = mkFactoryUnsafe ATen.zeros_lo
+zeros = mkFactoryUnsafe LibTorch.zeros_lo
 
 rand :: [Int] -> TensorOptions -> IO Tensor
-rand = mkFactory ATen.rand_lo
+rand = mkFactory LibTorch.rand_lo
 
 randn :: [Int] -> TensorOptions -> IO Tensor
-randn = mkFactory ATen.randn_lo
+randn = mkFactory LibTorch.randn_lo
 
 -------------------- Factories with default type --------------------
 

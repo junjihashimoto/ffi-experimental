@@ -48,9 +48,11 @@ library
                     , ATen.Managed.Type.StdArray
                     , ATen.Managed.Type.Context
                     , ATen.Managed.Type.Extra
+                    , Torch.Unmanaged.Autograd
                     , Torch.Unmanaged.NN
                     , Torch.Unmanaged.TH
                     , Torch.Unmanaged.Native
+                    , Torch.Managed.Autograd
                     , Torch.Managed.NN
                     , Torch.Managed.TH
                     , Torch.Managed.Native
