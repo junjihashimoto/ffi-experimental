@@ -57,6 +57,8 @@ jobs:
       - run: cabal new-exec codegen-exe
       - run: cabal new-test ffi --jobs=2
       - run: cabal new-exec ffi-test
+      - run: cabal build hasktorch
+      - run: cabal build examples
 
 workflows:
   version: 2
