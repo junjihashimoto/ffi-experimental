@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeApplications #-}
 
 module Torch.Functions where
 
@@ -7,11 +8,13 @@ import Foreign.ForeignPtr
 import qualified Aten.Managed.Native as ATen
 import qualified Aten.Managed.Type.Tensor as ATen
 import qualified Aten.Managed.Type.Scalar as ATen
+import qualified Aten.Const as ATen
 import qualified Aten.Type as ATen
 import qualified Aten.Managed.Cast
 import Aten.Cast
 
 import Torch.Tensor
+import Torch.DType
 
 kOne :: ForeignPtr ATen.Scalar
 kOne = unsafePerformIO $ ATen.newScalar_i 1
@@ -28,7 +31,7 @@ instance Num Tensor where
 instance Fractional Tensor where
   a / b = unsafePerformIO $ (cast2 ATen.div_tt) a b
   recip t = unsafePerformIO $ (cast1 ATen.reciprocal_t) t
-  fromRational asTensor = undefined -- TODO
+  fromRational = asTensor . (fromRational @Double)
 
 sumAll :: Tensor -> Tensor
 sumAll t = unsafePerformIO $ (cast1 ATen.sum_t) t
@@ -53,5 +56,20 @@ matmul a b =
 relu :: Tensor -> Tensor
 relu t = unsafePerformIO $ (cast1 ATen.relu_t) t
 
+sigmoid :: Tensor -> Tensor
+sigmoid t = unsafePerformIO $ (cast1 ATen.sigmoid_t) t
+
+tanh :: Tensor -> Tensor
+tanh t = unsafePerformIO $ (cast1 ATen.tanh_t) t
+
 gt :: Tensor -> Tensor -> Tensor
 gt a b = unsafePerformIO $ (cast2 ATen.gt_tt) a b
+
+toDType :: DType -> Tensor -> Tensor
+toDType dtype t = unsafePerformIO $ (cast4 ATen.tensor_to_sbb) t dtype False False
+
+squeezeAll :: Tensor -> Tensor
+squeezeAll t = unsafePerformIO $ (cast1 ATen.squeeze_t) t
+
+mse_loss :: Tensor -> Tensor -> Tensor
+mse_loss a b = unsafePerformIO $ (cast3 ATen.mse_loss_ttl) a b ATen.kMean

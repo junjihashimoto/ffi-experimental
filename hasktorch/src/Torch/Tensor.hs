@@ -23,6 +23,7 @@ import qualified Aten.Type as ATen
 import qualified Aten.Const as ATen
 import qualified Torch.Managed.Native as LibTorch
 
+import Torch.DType
 import Torch.TensorOptions
 
 
@@ -69,6 +70,8 @@ instance TensorIndex Int where
 instance TensorIndex Integer where
   t @@ idx = select t 0 $ fromIntegral idx
 
+-- TODO: advanced indexing
+
 instance (TensorIndex a, TensorIndex b) => TensorIndex (a,b) where
   t @@ (a, b) = (t @@ a) @@ b
 
@@ -84,13 +87,13 @@ class TensorLike a where
 
 mkScalarTensor :: Storable a => a -> TensorOptions -> Tensor
 mkScalarTensor v opts = unsafePerformIO $ do
-  t <- ((cast2 LibTorch.empty_lo) :: [Int] -> TensorOptions -> IO Tensor) [] int64_opts
+  t <- ((cast2 LibTorch.empty_lo) :: [Int] -> TensorOptions -> IO Tensor) [] opts
   ptr <- ((cast1 ATen.tensor_data_ptr) :: Tensor -> IO (Ptr ())) t
   poke (castPtr ptr) v
   return t
 
-int64_opts = TensorOptions $ unsafePerformIO $ ATen.newTensorOptions_s ATen.kLong
-float_opts = TensorOptions $ unsafePerformIO $ ATen.newTensorOptions_s ATen.kFloat
+int64_opts = withDType Int64 defaultOpts
+float_opts = withDType Float defaultOpts
 
 instance TensorLike Integer where
   asTensor v = mkScalarTensor @Int64 (fromIntegral v) int64_opts
