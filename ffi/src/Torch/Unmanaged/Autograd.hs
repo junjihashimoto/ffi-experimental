@@ -64,3 +64,8 @@ grad y inputs = [C.throwBlock| std::vector<at::Tensor>* {
 
     return new std::vector<at::Tensor>(at::fmap<at::Tensor>(outputs));
   }|]
+
+makeIndependent :: Ptr Tensor -> IO (Ptr Tensor)
+makeIndependent t = [C.throwBlock| at::Tensor* {
+    return new at::Tensor($(at::Tensor* t)->detach().set_requires_grad(true));
+  }|]

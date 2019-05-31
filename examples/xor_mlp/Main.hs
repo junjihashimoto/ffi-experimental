@@ -28,7 +28,7 @@ class Parametrized f where
 
 replaceParameters :: Parametrized f => f -> [Tensor] -> f
 replaceParameters f params =
-  let (f', remaining) = runState (replaceOwnParameters f) params in
+  let (f', remaining) = runState (replaceOwnParameters f) (map independent params) in
   if null remaining
     then f'
     else error "Some parameters in a call to replaceParameters haven't been consumed!"
@@ -112,21 +112,21 @@ sgd lr parameters gradients = zipWith (\p dp -> p - (lr * dp)) parameters gradie
 main :: IO ()
 main = do
     init <- sample $ MLPSpec { feature_counts = [2, 20, 20, 1], nonlinearitySpec = Torch.Functions.tanh }
-    trained <- foldLoop init num_iters $ \parameters i -> do
+    trained <- foldLoop init num_iters $ \state i -> do
         input <- rand' [batch_size, 2] >>= return . (toDType Float) . (gt 0.5)
         let expected_output = tensorXOR input
 
-        let output = squeezeAll $ model parameters input
+        let output = squeezeAll $ model state input
         let loss = mse_loss output expected_output
 
-        let flat_parameters = flattenParameters parameters
+        let flat_parameters = flattenParameters state
         let gradients = grad loss flat_parameters
 
         if i `mod` 100 == 0
           then do putStrLn $ show loss
           else return ()
 
-        return $ replaceParameters parameters $ sgd 1e-2 flat_parameters gradients
+        return $ replaceParameters state $ sgd 1e-2 flat_parameters gradients
     return ()
   where
     foldLoop x count block = foldM block x [1..count]

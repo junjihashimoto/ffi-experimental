@@ -13,3 +13,7 @@ import Aten.Cast
 
 grad :: ForeignPtr Tensor -> ForeignPtr TensorList -> IO (ForeignPtr TensorList)
 grad = cast2 Unmanaged.grad
+
+
+makeIndependent :: ForeignPtr Tensor -> IO (ForeignPtr Tensor)
+makeIndependent = cast1 Unmanaged.makeIndependent
