@@ -1,16 +1,16 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 
-module Aten.Managed.Cast where
+module ATen.Managed.Cast where
 
 import Foreign.ForeignPtr
 import Control.Monad
 
-import Aten.Class
-import Aten.Cast
-import Aten.Type
-import Aten.Managed.Type.IntArray
-import Aten.Managed.Type.TensorList
+import ATen.Class
+import ATen.Cast
+import ATen.Type
+import ATen.Managed.Type.IntArray
+import ATen.Managed.Type.TensorList
 
 instance Castable [Int] (ForeignPtr IntArray) where
   cast xs f = do

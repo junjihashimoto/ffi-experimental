@@ -13,14 +13,14 @@ import System.IO.Unsafe
 import Data.Int (Int64)
 import Data.List (intercalate)
 
-import Aten.Cast
-import Aten.Class (Castable(..))
-import qualified Aten.Managed.Type.Tensor as ATen
-import qualified Aten.Managed.Type.TensorOptions as ATen
-import qualified Aten.Managed.Native as ATen
-import qualified Aten.Managed.Cast as ATen
-import qualified Aten.Type as ATen
-import qualified Aten.Const as ATen
+import ATen.Cast
+import ATen.Class (Castable(..))
+import qualified ATen.Managed.Type.Tensor as ATen
+import qualified ATen.Managed.Type.TensorOptions as ATen
+import qualified ATen.Managed.Native as ATen
+import qualified ATen.Managed.Cast as ATen
+import qualified ATen.Type as ATen
+import qualified ATen.Const as ATen
 import qualified Torch.Managed.Native as LibTorch
 
 import Torch.DType

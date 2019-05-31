@@ -34,6 +34,7 @@ library
                     , ATen.Unmanaged.Type.Extra
                     , ATen.Managed.NN
                     , ATen.Managed.TH
+                    , ATen.Managed.Cast
                     , ATen.Managed.Native
                     , ATen.Managed.Type.Tuple
                     , ATen.Managed.Type.Generator

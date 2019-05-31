@@ -5,13 +5,13 @@ module Torch.Functions where
 import System.IO.Unsafe
 import Foreign.ForeignPtr
 
-import qualified Aten.Managed.Native as ATen
-import qualified Aten.Managed.Type.Tensor as ATen
-import qualified Aten.Managed.Type.Scalar as ATen
-import qualified Aten.Const as ATen
-import qualified Aten.Type as ATen
-import qualified Aten.Managed.Cast
-import Aten.Cast
+import qualified ATen.Managed.Native as ATen
+import qualified ATen.Managed.Type.Tensor as ATen
+import qualified ATen.Managed.Type.Scalar as ATen
+import qualified ATen.Const as ATen
+import qualified ATen.Type as ATen
+import qualified ATen.Managed.Cast
+import ATen.Cast
 
 import Torch.Tensor
 import Torch.DType

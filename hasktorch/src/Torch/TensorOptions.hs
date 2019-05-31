@@ -7,11 +7,11 @@ module Torch.TensorOptions where
 import Foreign.ForeignPtr
 import System.IO.Unsafe
 
-import Aten.Cast
-import Aten.Class (Castable(..))
-import qualified Aten.Type as ATen
-import qualified Aten.Const as ATen
-import qualified Aten.Managed.Type.TensorOptions as ATen
+import ATen.Cast
+import ATen.Class (Castable(..))
+import qualified ATen.Type as ATen
+import qualified ATen.Const as ATen
+import qualified ATen.Managed.Type.TensorOptions as ATen
 
 import Torch.DType
 

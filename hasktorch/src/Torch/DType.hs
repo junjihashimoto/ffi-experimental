@@ -4,9 +4,9 @@
 
 module Torch.DType where
 
-import Aten.Class (Castable(..))
-import qualified Aten.Const as ATen
-import qualified Aten.Type as ATen
+import ATen.Class (Castable(..))
+import qualified ATen.Const as ATen
+import qualified ATen.Type as ATen
 
 data DType = UInt8 | Int8 | Int16 | Int32 | Int64 | Half | Float | Double
   deriving (Eq, Show)
