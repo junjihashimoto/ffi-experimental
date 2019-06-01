@@ -69,7 +69,11 @@ library
                     , mklml
                     , caffe2
                     , torch
- ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0 -optc-std=c++11 -optc-xc++
+ if os(darwin)
+  ld-options: -Wl,-keep_dwarf_unwind
+  ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0 -optc-std=c++11 -optc-xc++
+ else
+  ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0 -optc-std=c++11
  cc-options:        -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++11
  cxx-options:       -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++11
  extensions:          Strict
@@ -86,7 +90,11 @@ executable ffi-test
                      , optparse-applicative >= 0.14.3.0
                      , containers
                      , safe-exceptions
-  ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0 -optc-std=c++11 -optc-xc++
+  if os(darwin)
+    ld-options: -Wl,-keep_dwarf_unwind
+    ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0 -optc-std=c++11 -optc-xc++
+  else
+    ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0 -optc-std=c++11
   cc-options:        -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++11
   cxx-options:       -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++11
   extra-libraries:     stdc++
@@ -115,7 +123,11 @@ test-suite spec
                      , hspec
                      , hspec-discover
                      , safe-exceptions
-  ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0 -optc-std=c++11 -optc-xc++
+  if os(darwin)
+    ld-options: -Wl,-keep_dwarf_unwind
+    ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0 -optc-std=c++11 -optc-xc++
+  else
+    ghc-options:       -optc-D_GLIBCXX_USE_CXX11_ABI=0 -optc-std=c++11
   cc-options:        -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++11
   cxx-options:       -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++11
 --  extra-libraries:    torch
