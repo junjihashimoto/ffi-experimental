@@ -38,6 +38,7 @@ mkDefaultFactory non_default shape = non_default shape defaultOpts
 
 ones :: [Int] -> TensorOptions -> Tensor
 ones = mkFactoryUnsafe LibTorch.ones_lo
+{- # NOINLINE ones # -}
 
 zeros :: [Int] -> TensorOptions -> Tensor
 zeros = mkFactoryUnsafe LibTorch.zeros_lo
