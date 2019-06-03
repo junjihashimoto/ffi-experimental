@@ -78,6 +78,7 @@ jobs:
       - run: clang --version
       - run: stack --version
       - run: cd deps/ ; ./get-deps.sh USE_BINARY_FOR_CI
+      - run: cp -a deps/libtorch/lib/*.dylib deps/mklml/lib/*.dylib /usr/local/lib/
       - run: cd libtorch-test ; make
       - run:
           name: stack build
