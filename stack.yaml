@@ -3,6 +3,7 @@ resolver: lts-13.1
 packages:
 - codegen
 - ffi
+- static-ffi
 - inline-c/inline-c
 - inline-c/inline-c-cpp
 - hasktorch
@@ -21,3 +22,4 @@ extra-lib-dirs:
 
 extra-deps:
 - template-0.2.0.10@sha256:f822de4d34c45bc84b33a61bc112c15fedee6fa6dc414c62b10456395a868f85
+- dimensions-1.0.1.1@sha256:0055c7f4fe446a687eb03854ee8b33a7b4b14084b8a24cadb0c18aef21038018
