@@ -15,6 +15,7 @@ jobs:
       - run: wget -qO- https://get.haskellstack.org/ | sh
       - run: gcc --version
       - run: stack --version
+      - run: mkdir -p ~/.stack && cp .circleci/stack-config.yaml  ~/.stack/config.yaml
       - run: cd deps/ ; ./get-deps.sh USE_BINARY_FOR_CI
       - run:
           name: stack build
@@ -73,6 +74,7 @@ jobs:
       - run: wget -qO- https://get.haskellstack.org/ | sh
       - run: clang --version
       - run: stack --version
+      - run: mkdir -p ~/.stack && cp .circleci/stack-config.yaml  ~/.stack/config.yaml
       - run: cd deps/ ; ./get-deps.sh USE_BINARY_FOR_CI
       - run: cp -a deps/libtorch/lib/*.dylib deps/mklml/lib/*.dylib /usr/local/lib/
       - run:
