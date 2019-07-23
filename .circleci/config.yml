@@ -20,7 +20,7 @@ jobs:
           name: stack build
           command: stack build --jobs 2
           no_output_timeout: 15m
-      - run: stack test --jobs 2 -ta --seed 1870171431
+      - run: stack test --jobs 2 --ta --seed=1870171431
       - run: stack exec codegen-exe
       - run: stack test --jobs 2
       - run: stack exec xor_mlp
