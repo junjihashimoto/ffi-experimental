@@ -128,8 +128,8 @@ class TensorLike a where
   -- Internal functions(like "_xxx") are below. Do not use them directly.
   _dtype :: DType
   _dims :: a -> [Int]
-  _peekElemOff :: Ptr () -> Int -> [Int] -> IO a
-  _pokeElemOff :: Ptr () -> Int -> a -> IO ()
+  _peekElemOff :: Tensor -> Int -> [Int] -> IO a
+  _pokeElemOff :: Tensor -> Int -> a -> IO ()
 
 int64_opts = withDType Int64 defaultOpts
 float_opts = withDType Float defaultOpts
@@ -137,8 +137,7 @@ float_opts = withDType Float defaultOpts
 instance (DataType a, Storable a) => TensorLike a where
   asTensor' v opts = unsafePerformIO $ do
     t <- ((cast2 LibTorch.empty_lo) :: [Int] -> TensorOptions -> IO Tensor) [] $ withDType (dataType @a) opts
-    ptr <- ((cast1 ATen.tensor_data_ptr) :: Tensor -> IO (Ptr ())) t
-    _pokeElemOff ptr 0 v
+    _pokeElemOff t 0 v
     return t
 
   asTensor v = asTensor' v defaultOpts
@@ -146,21 +145,23 @@ instance (DataType a, Storable a) => TensorLike a where
   asValue t = unsafePerformIO $ do
     if dataType @a == dtype t
     then do
-      ptr <- ((cast1 ATen.tensor_data_ptr) :: Tensor -> IO (Ptr ())) t
-      _peekElemOff ptr 0 []
+      _peekElemOff t 0 []
     else
       throwIO $ userError $ "The infered DType of asValue is " ++ show (_dtype @a)  ++ ", but the DType of tensor on memory is " ++ show (dtype t) ++ "."
 
   _dtype = dataType @a
   _dims _ = []
-  _peekElemOff ptr offset _ = peekElemOff (castPtr ptr) offset
-  _pokeElemOff ptr offset v = pokeElemOff (castPtr ptr) offset v
+  _peekElemOff t offset _ = do
+     ptr <- ((cast1 ATen.tensor_data_ptr) :: Tensor -> IO (Ptr ())) t
+     peekElemOff (castPtr ptr) offset
+  _pokeElemOff t offset v = do
+     ptr <- ((cast1 ATen.tensor_data_ptr) :: Tensor -> IO (Ptr ())) t
+     pokeElemOff (castPtr ptr) offset v
 
 instance {-# OVERLAPPING #-}TensorLike a => TensorLike [a] where
   asTensor' v opts = unsafePerformIO $ do
     t <- ((cast2 LibTorch.empty_lo) :: [Int] -> TensorOptions -> IO Tensor) (_dims v) $ withDType (_dtype @a) opts
-    ptr <- ((cast1 ATen.tensor_data_ptr) :: Tensor -> IO (Ptr ())) t
-    _pokeElemOff ptr 0 v
+    _pokeElemOff t 0 v
     return t
 
   asTensor v = asTensor' v defaultOpts
@@ -169,7 +170,7 @@ instance {-# OVERLAPPING #-}TensorLike a => TensorLike [a] where
     if _dtype @a == dtype t
     then do
       ptr <- ((cast1 ATen.tensor_data_ptr) :: Tensor -> IO (Ptr ())) t
-      _peekElemOff ptr 0 (shape t)
+      _peekElemOff t 0 (shape t)
     else
       throwIO $ userError $ "The infered DType of asValue is " ++ show (_dtype @a)  ++ ", but the DType of tensor on memory is " ++ show (dtype t) ++ "."
 
@@ -178,18 +179,18 @@ instance {-# OVERLAPPING #-}TensorLike a => TensorLike [a] where
   _dims [] = []
   _dims v@(x:_) = (length v):(_dims x)
 
-  _peekElemOff ptr offset [] = return []
-  _peekElemOff ptr offset (d:dims) =
+  _peekElemOff t offset [] = return []
+  _peekElemOff t offset (d:dims) =
     let width = product dims
     in forM [0..(d-1)] $ \i ->
-         _peekElemOff ptr (offset+i*width) dims
+         _peekElemOff t (offset+i*width) dims
 
-  _pokeElemOff ptr offset [] = return ()
-  _pokeElemOff ptr offset v@(x:_) =
+  _pokeElemOff t offset [] = return ()
+  _pokeElemOff t offset v@(x:_) =
     let width = product (_dims x)
     in forM_ (zip [0..] v) $ \(i,d) ->
          if product (_dims d) == width -- This validation may be slow.
-         then (_pokeElemOff @a) ptr (offset+i*width) d
+         then (_pokeElemOff @a) t (offset+i*width) d
          else throwIO $ userError $ "There are lists having different length."
 
 --------------------------------------------------------------------------------
